@@ -74,6 +74,9 @@
       
       var imageUpload = document.getElementById('imageUpload');
       var image = imageUpload.files[0];
+
+      var resultTextbox = document.getElementById('resultTextbox');
+      resultTextbox.value = 'Loading...';
       
       var formData = new FormData();
       formData.append('image', image);
@@ -85,10 +88,9 @@
       .then(response => response.text())
       .then(data => {
         // Display the returned data in the result textbox
-        var resultTextbox = document.getElementById('resultTextbox');
         resultTextbox.value = data;
       })
-      .catch(error => console.error(error));
+      .catch(error => resultTextbox.value = error);
     }
   </script>
 </body>
