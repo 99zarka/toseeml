@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Processing</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div class="container mt-5">
+    <h1>Image Processing</h1>
+    <hr>
+
+    <!-- Option selection -->
+    <div class="mb-3">
+      <label for="optionSelect" class="form-label">Choose an option:</label>
+      <select class="form-select" id="optionSelect">
+        <option value="ocr">OCR</option>
+        <option value="getface">Get Face</option>
+        <option value="getobject">Get Object</option>
+      </select>
+    </div>
+
+    <!-- Image upload -->
+    <div class="mb-3">
+      <label for="imageUpload" class="form-label">Upload an image:</label>
+      <input class="form-control" type="file" id="imageUpload" onchange="previewImage(event)">
+    </div>
+
+    <!-- Image preview -->
+    <div class="mb-3">
+      <img id="previewImage" class="img-fluid mb-3" style="display: none; max-height:100vh">
+    </div>
+
+    <!-- Submit button -->
+    <button class="btn btn-primary mb-3" onclick="processImage()">Submit</button>
+
+    <!-- Result textbox -->
+    <textarea id="resultTextbox" class="form-control" rows="5" readonly></textarea>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function previewImage(event) {
+      var imageUpload = document.getElementById('imageUpload');
+      var previewImage = document.getElementById('previewImage');
+      var image = event.target.files[0];
+
+      var reader = new FileReader();
+      reader.onload = function() {
+        previewImage.src = reader.result;
+        previewImage.style.display = 'block';
+      };
+      reader.readAsDataURL(image);
+    }
+
+    function processImage() {
+      var optionSelect = document.getElementById('optionSelect');
+      var selectedOption = optionSelect.value;
+      
+      var imageUpload = document.getElementById('imageUpload');
+      var image = imageUpload.files[0];
+      
+      var formData = new FormData();
+      formData.append('image', image);
+      
+      fetch('https://99zarka.pythonanywhere.com/proxy/ml/' + selectedOption, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.text())
+      .then(data => {
+        // Display the returned data in the result textbox
+        var resultTextbox = document.getElementById('resultTextbox');
+        resultTextbox.value = data;
+      })
+      .catch(error => console.error(error));
+    }
+  </script>
+</body>
+
+</html>
