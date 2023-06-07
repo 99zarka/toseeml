@@ -68,7 +68,7 @@
       var formData = new FormData();
       formData.append('image', image);
       
-      fetch('https://99zarka.pythonanywhere.com/proxy/ml/' + selectedOption, {
+      fetch('http://zarka99.duckdns.org:5557/ml/' + selectedOption, {
         method: 'POST',
         body: formData
       })
