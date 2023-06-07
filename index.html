@@ -18,9 +18,9 @@
     <div class="mb-3">
       <label for="optionSelect" class="form-label">Choose an option:</label>
       <select class="form-select" id="optionSelect">
-        <option value="ocr">OCR</option>
-        <option value="getface">Get Face</option>
-        <option value="getobject">Get Object</option>
+        <option value="ocr">OCR (PaddleOCR)</option>
+        <option value="getface">Face Recognition (TensoFlow)</option>
+        <option value="getobject">Object Detection (Yolo8)</option>
       </select>
     </div>
 
@@ -45,6 +45,16 @@
   <!-- Bootstrap JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
   <script>
+    function redirectToHttp() {
+      // Check if the current protocol is HTTPS
+      if (window.location.protocol === "https:") {
+        // Redirect to the HTTP version of the site
+        window.location.replace("http://" + window.location.host + window.location.pathname);
+      }
+    }
+    
+    window.addEventListener("load", redirectToHttp);
+    
     function previewImage(event) {
       var imageUpload = document.getElementById('imageUpload');
       var previewImage = document.getElementById('previewImage');
