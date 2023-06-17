@@ -36,8 +36,8 @@ def run(photo):
         confidence = result.max(axis=1)*100
         if confidence > 90:
             label_text = "%s (%.2f %%)" % (labels[idx], confidence)
-            print(labels[idx])
-            final_result.append(str(labels[idx][0]))
+            print(labels[idx-2])
+            final_result.append(str(labels[idx-2][0]))
         else :
             label_text = "N/A"
         labels[idx]
