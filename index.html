@@ -47,9 +47,9 @@
   <script>
     function redirectToHttp() {
       // Check if the current protocol is HTTPS
-      if (window.location.protocol === "https:") {
+      if (window.location.protocol === "http:") {
         // Redirect to the HTTP version of the site
-        window.location.replace("http://" + window.location.host + window.location.pathname);
+        window.location.replace("https://" + window.location.host + window.location.pathname);
       }
     }
     
